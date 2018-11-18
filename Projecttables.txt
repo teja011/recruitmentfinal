@@ -1,0 +1,78 @@
+create table company_master(
+company_id varchar2(5) primary key,
+company_name varchar2(30),
+company_address varchar2(100),
+contact_person varchar2(25),
+email_id varchar2(30),
+contact_number varchar2(10)
+);
+
+
+create table cource(
+candidate_id varchar2(5) primary key,
+candidate_name varchar2(20),
+address varchar2(100),
+dob varchar(10),
+email_id varchar2(30),
+contact_number varchar2(10),
+marital_status varchar2(15),
+gender varchar2(10),
+passport_number varchar2(15)
+);
+
+
+create table candidate_qualifications(
+qualification_id varchar2(5) primary key,
+qualification_name varchar2(30),
+specialization_area varchar2(30),
+college_name varchar2(25),
+university_name varchar2(30),
+year_of_passing varchar2(4),
+percentage number(5,2),
+candidate_id varchar2(5) references cource(candidate_id)
+);
+
+
+create table candidate_work_history(
+work_id varchar2(5) primary key,
+candidate_id varchar2(5) references cource(candidate_id),
+which_employer varchar2(10),
+contact_person varchar2(25),
+position_held varchar2(20),
+company_name varchar2(20),
+employee_from varchar(10),
+employee_to varchar(10),
+reason_for_leaving varchar2(100),
+responsibilities varchar2(150),
+hr_rep_name varchar2(20),
+hr_rep_contact_number varchar2(10)
+);
+
+
+create table job_requirements(
+job_id varchar2(5) primary key,
+company_id varchar2(5) references company_master(company_id),
+position_required varchar2(20),
+number_required number(2),
+experience_required number(2),
+qualification_required varchar2(20),
+job_location varchar2(25),
+job_description varchar2(100)
+);
+
+
+create table job_apllied(
+job_id varchar2(5) references job_requirements(job_id),
+candidate_id varchar2(5) references candidate_personal(candidate_id)
+);
+
+create table Recruitmentlogin(login_id varchar(10),password varchar(10),role varchar(10));
+
+insert into Recruitmentlogin values('Shreya','Shreya','candidate');
+insert into Recruitmentlogin values('Arkjit','Arkjit','company');
+insert into Recruitmentlogin values('Dinesh','Dinesh','Admin');
+
+
+create table apply(candidate_id varchar2(5) references cource(candidate_id)
+,job_id varchar2(5) references job_requirements(job_id),company_id varchar2(5) r
+eferences company_master(company_id),status varchar(10));
